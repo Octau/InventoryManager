@@ -18,27 +18,39 @@ class SupplierController extends Controller
     }
 
     public function livesearch(Request $request){
+        $d_format = 'd-m-Y H:i:s';
         if($request->ajax()){
-            $result = "";
-            $suppliers = Supplier::where("name","LIKE", "%".$request->name."%")->paginate(20)
-            ;
+            $result = array();
+            $suppliers = Supplier::where("name","LIKE", "%".$request->name."%")
+            ->paginate(20);
 
             $total_row = $suppliers->count();
             if($total_row>0){
-                // $x=0;
-                foreach($suppliers as $supplier){
-                    // $x+=1;
-                    // echo($x);
-                    $result .='<tr scope="row">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">'. $supplier->id .'</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">'. $supplier->name .'</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">'. $supplier->address .'</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" align="center"> <img src="'. ((intval($supplier->status) == 1) ? asset('img/circlecheck.svg') : asset('img/circlex.svg'))  .'" alt=" '.((intval($supplier->status) == 1) ? "active" : "inactive")  .'"></td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">'. $supplier->created_at .'</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">'. $supplier->updated_at .'</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center"><a href="'. route('supplier.edit', ['supplier_id' => $supplier->id]).'" ><img src="'. asset('img/edit.svg') .'" alt="EDIT"></button></td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center"><a href="'. route('supplier.delete', ['supplier_id' => $supplier->id]).'" ><img src="'. asset('img/trash.svg') .'" alt="DELETE"></button></td>
-                    </tr>';
+                foreach ($suppliers as $supplier) {
+                                    // $x=0;
+                // foreach($suppliers as $supplier){
+                //     // $x+=1;
+                //     // echo($x);
+                //     $result .='<tr scope="row">
+                //         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">'. $supplier->id .'</td>
+                //         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">'. $supplier->name .'</td>
+                //         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">'. $supplier->address .'</td>
+                //         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" align="center"> <img src="'. ((intval($supplier->status) == 1) ? asset('img/circlecheck.svg') : asset('img/circlex.svg'))  .'" alt=" '.((intval($supplier->status) == 1) ? "active" : "inactive")  .'"></td>
+                //         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">'. $supplier->created_at .'</td>
+                //         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">'. $supplier->updated_at .'</td>
+                //         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center"><a href="'. route('supplier.edit', ['supplier_id' => $supplier->id]).'" ><img src="'. asset('img/edit.svg') .'" alt="EDIT"></button></td>
+                //         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center"><a href="'. route('supplier.delete', ['supplier_id' => $supplier->id]).'" ><img src="'. asset('img/trash.svg') .'" alt="DELETE"></button></td>
+                //     </tr>';
+                // }
+                    $item = array(
+                            "id" => $supplier->id,
+                            "name" => $supplier->name,
+                            "address" => $supplier->address,
+                            "status" => $supplier->status,
+                            "created_at" => date_format(date_create($supplier->created_at),$d_format),
+                            "updated_at" => date_format(date_create($supplier->updated_at),$d_format),
+                        );
+                    array_push($result, $item);
                 }
             }
         }

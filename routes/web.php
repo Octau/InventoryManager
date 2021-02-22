@@ -24,7 +24,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/supplier', [SupplierController::class, 'index'])->name('supplier.index');
 Route::get('/supplier/add', [SupplierController::class, 'create'])->name('supplier.add');
-Route::get('/supplier/livesearch', [SupplierController::class, 'livesearch'])->name('livesearch');
+Route::get('/supplier/livesearch', [SupplierController::class, 'livesearch'])->name('supplier.livesearch');
 Route::post('/supplier/save', [SupplierController::class, 'store'])->name('supplier.save');
 // Route::get('/supplier/search',[SupplierController@search])->name('supplier.search');
 Route::get('/supplier/edit/{supplier_id}', [SupplierController::class, 'singleSupplier'])->name('supplier.edit');
