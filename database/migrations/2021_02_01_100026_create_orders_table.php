@@ -14,10 +14,10 @@ class CreateOrdersTable extends Migration
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->id('order_id');
+            $table->id();
             $table->string('title', 50);
             $table->string('description', 100)->nullable();
-            $table->foreignId('product_id')->references('product_id')->on('products');
+            $table->foreignId('product_id')->references('id')->on('products');
             $table->bigInteger('number_shipped')->default(0);
             $table->date('order_date',$precision=0);
             $table->boolean('status')->default(true);

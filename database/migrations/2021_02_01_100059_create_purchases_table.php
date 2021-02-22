@@ -14,10 +14,9 @@ class CreatePurchasesTable extends Migration
     public function up()
     {
         Schema::create('purchases', function (Blueprint $table) {
-            Schema::dropIfExists('purchases');
             $table->id('purchase_id');
-            $table->foreignId('supplier_id')->references('supplier_id')->on('suppliers');
-            $table->foreignId('product_id')->references('product_id')->on('products');
+            $table->foreignId('supplier_id')->references('id')->on('suppliers');
+            $table->foreignId('product_id')->references('id')->on('products');
             $table->boolean('status')->default(true);
             $table->date('purchase_date', $precision=0);
             $table->timestamps();

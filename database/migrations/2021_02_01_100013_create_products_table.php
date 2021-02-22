@@ -14,9 +14,9 @@ class CreateProductsTable extends Migration
     public function up()
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->id('product_id');
+            $table->id();
             $table->string('product_name', 50);
-            $table->foreignId('product_type_id')->references('product_type_id')->on('product_types');
+            $table->foreignId('product_type_id')->references('id')->on('product_types');
             $table->bigInteger('inventory_received')->default(0);
             $table->bigInteger('inventory_shipped')->default(0);
             $table->boolean('status')->default(true);

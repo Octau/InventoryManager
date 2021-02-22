@@ -15,6 +15,7 @@
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
@@ -28,8 +29,10 @@
             </header>
 
             <!-- Page Content -->
-            <main>
-                {{ $slot }}
+            <main class="px-4">
+                <div class="container">
+                    {{ $slot }}
+                </div>
             </main>
         </div>
     </body>
